@@ -50,13 +50,12 @@ def run_game():
 
         print()  # adds an empty line
 
-        if blanks == 0:
+        guess: str = input('Enter a letter: ')
+        if blanks == 0 or guess == word:
             print('You got it!')
             break
 
-        guess: str = input('Enter a letter: ')
-
-        if guess.isalpha():
+        if guess.isalpha() and len(guess) == 1:
             if guess in guessed_letters:
                 print(f'You already used: "{guess}". Please try another letter!')
                 continue
@@ -72,7 +71,7 @@ def run_game():
                     print('No more tries remaining. Game Over')
                     break
         else:
-            print('Only letters allowed. Please, try again!')
+            print('Only single letters or correct word allowed!\n Please, try again!')
 
 
 if __name__ == '__main__':

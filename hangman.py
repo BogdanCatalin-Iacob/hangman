@@ -27,4 +27,53 @@ def run_game():
     '''
     Main game loop
     '''
-    pass
+
+    # get the settings
+    data = setup()
+    tries = data.get('tries')
+    word = data.get('word')
+
+    # keep track of the used letters
+    guessed_letters: str = ''
+
+    # game loop
+    while tries > 0:
+        blanks: int = 0  # underscores where letters should be
+
+        print('Word: ', end='')
+        for char in word:
+            if char in guessed_letters:
+                print(char, end='')
+            else:
+                print('_', end='')
+                blanks += 1
+
+        print()  # adds an empty line
+
+        if blanks == 0:
+            print('You got it!')
+            break
+
+        guess: str = input('Enter a letter: ')
+
+        if guess.isalpha():
+            if guess in guessed_letters:
+                print(f'You already used: "{guess}". Please try another letter!')
+                continue
+
+            guessed_letters += guess
+
+            # decrease tries to end game
+            if guess not in word:
+                tries -= 1
+                print(f'Sorry, that was wrong... ({tries} tries remaining)')
+
+                if tries == 0:
+                    print('No more tries remaining. Game Over')
+                    break
+        else:
+            print('Only letters allowed. Please, try again!')
+
+
+if __name__ == '__main__':
+    run_game()
